@@ -1,0 +1,81 @@
+create database course;
+
+use course;
+
+create table Clothes(
+	id int not null primary key auto_increment,
+	title varchar(255) not null,
+	type varchar(255) not null,
+	imageLink varchar(255) not null,
+	price decimal(16,2) not null
+);
+
+
+create table Image(
+	id int not null primary key auto_increment,
+	title varchar(255) not null,
+	theme varchar(255) not null,
+	link varchar(255) not null,
+	author varchar(255) not null,
+	status varchar(255) not null
+);
+
+
+create table Template(
+	id int not null primary key auto_increment,
+	location varchar(255) not null,
+	price decimal(16,2) not null
+);
+
+
+create table Print(
+	id int not null primary key auto_increment,
+	templateID int not null,
+	imageID int not null
+);
+
+alter table Print add foreign key (templateID) references Template(id);
+alter table Print add foreign key (imageID) references Image(id);
+
+
+create table Combination(
+	id int not null primary key auto_increment,
+	clothesID int not null,
+	printID int not null,
+	combinedImageLink varchar(255) not null,
+	totalSum decimal(16,2) null   
+);
+
+alter table Combination add foreign key (clothesID) references Clothes(id);
+alter table Combination add foreign key (printID) references Print(id);
+
+create table Orders(
+	id int not null primary key auto_increment,
+	date varchar(255) not null,
+	clientID int not null,
+	status varchar(255) not null,
+	email varchar(255) null,
+	address varchar(255) null,
+	cost decimal(16,2) null   
+);
+
+create table OrderItem(
+	id int not null primary key auto_increment,
+	orderID int not null,
+	clothesID int not null,
+	printID int not null,
+	size varchar(255) not null,
+	quantity int not null   
+);
+
+create table Users(
+	id int not null primary key auto_increment,
+	login varchar(255) not null,
+	password varchar(255) not null, 
+	role varchar(255) not null,
+	firstName varchar(255) not null,
+	lastName varchar(255) not null,
+	email varchar(255) null,
+	address varchar(255) null,
+	balance decimal(16,2)
+);
